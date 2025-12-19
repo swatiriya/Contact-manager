@@ -40,3 +40,43 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Background video */
+.bg-video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1;
+  object-fit: cover;
+  opacity: 0.55;
+  filter: brightness(0.6) saturate(1.05);
+  pointer-events: none;
+}
+
+.site-overlay {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+.about-section {
+  max-width: 900px;
+  margin: 28px auto 48px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 18px 20px;
+  border-radius: 12px;
+  color: var(--text);
+  text-align: left;
+}
+
+@media (max-width: 640px) {
+  .about-section {
+    margin: 18px 12px 32px;
+    padding: 14px;
+  }
+}

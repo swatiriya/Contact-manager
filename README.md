@@ -9,6 +9,7 @@ A simple Contact Management app (frontend-only) built with React + Vite.
 - Dedicated **All Contacts** page
 - Login and Signup placeholder pages (no backend)
 - Light / dark theme toggle
+- Moving background video (configurable) and an "About us" section on the home page
 
 ## Quick start
 

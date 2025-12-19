@@ -68,15 +68,40 @@ function App() {
   const navigate = (p) => setPage(p);
 
   return (
-    <div className="container">
-      <Header theme={theme} onToggleTheme={toggleTheme} onNavigate={navigate} />
-      {page === "home" && <ContactForm onAdd={addContact} />}
-      {page === "contacts" && (
-        <AllContacts contacts={contacts} onDelete={deleteContact} onToggleFavorite={toggleFavorite} onBack={() => navigate("home")} />
-      )}
-      {page === "login" && <Login onLogin={handleLogin} onBack={() => navigate("home")} />}
-      {page === "signup" && <Signup onSignup={handleSignup} onBack={() => navigate("home")} />}
-    </div>
+    <>
+      <video className="bg-video" autoPlay muted loop playsInline>
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      <div className="site-overlay">
+        <div className="container">
+          <Header theme={theme} onToggleTheme={toggleTheme} onNavigate={navigate} />
+
+          {page === "home" && (
+            <>
+              <ContactForm onAdd={addContact} />
+
+              <section className="about-section">
+                <h2 style={{ marginTop: 0 }}>About us</h2>
+                <p>
+                  Connectly is a simple contact management demo built with React and Vite. You can add, edit, and delete contacts, and mark favorites.
+                  This application is frontend-only and keeps data in memory during the session. Replace the background video in `public/` or change the `src` on the
+                  `<video>` element to a different URL to customize the background.
+                </p>
+              </section>
+            </>
+          )}
+
+          {page === "contacts" && (
+            <AllContacts contacts={contacts} onDelete={deleteContact} onToggleFavorite={toggleFavorite} onBack={() => navigate("home")} />
+          )}
+
+          {page === "login" && <Login onLogin={handleLogin} onBack={() => navigate("home")} />}
+          {page === "signup" && <Signup onSignup={handleSignup} onBack={() => navigate("home")} />}
+        </div>
+      </div>
+    </>
   );
 }
 
