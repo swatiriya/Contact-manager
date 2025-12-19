@@ -1,0 +1,104 @@
+:root {
+  --bg: #f5f7fb;
+  --text: #0f172a;
+  --muted: #475569;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --input-bg: #ffffff;
+  --input-border: #cbd5e1;
+  --primary: #2563eb;
+  --primary-text: #f8fafc;
+  --primary-shadow: rgba(37, 99, 235, 0.25);
+  --danger: #ef4444;
+  --danger-text: #0b1221;
+  --nav-bg: #ffffff;
+  --nav-border: #e2e8f0;
+  --nav-text: #0f172a;
+  --accent: #38bdf8;
+  --accent-2: #6366f1;
+  --toggle-track: #e2e8f0;
+  --toggle-knob: #ffffff;
+}
+
+.theme-dark {
+  --bg: #0b1221;
+  --text: #e2e8f0;
+  --muted: #cbd5e1;
+  --card-bg: #0f172a;
+  --card-border: #1f2937;
+  --input-bg: #0f172a;
+  --input-border: #1f2937;
+  --primary: #2563eb;
+  --primary-text: #f8fafc;
+  --primary-shadow: rgba(37, 99, 235, 0.42);
+  --danger: #ef4444;
+  --danger-text: #0b1221;
+  --nav-bg: #0f172a;
+  --nav-border: #1f2937;
+  --nav-text: #e2e8f0;
+  --accent: #38bdf8;
+  --accent-2: #22d3ee;
+  --toggle-track: #111827;
+  --toggle-knob: #1f2937;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  padding: 0;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 24px 40px;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+h1 {
+  color: var(--text);
+}
+
+h2 {
+  margin-bottom: 12px;
+  color: var(--muted);
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text);
+}
+
+button {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: var(--primary);
+  color: var(--primary-text);
+  font-weight: 700;
+  box-shadow: 0 10px 24px var(--primary-shadow);
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 140ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px var(--primary-shadow);
+}
