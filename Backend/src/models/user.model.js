@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+
 const userSchema = new mongoose.Schema(
   {
-    fullName: {
+    fullname: {
       type: String,
       required: true,
     },
@@ -14,9 +15,14 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    contacts: [{
+      type: mongoose.Types.ObjectId,
+      ref: 'Contact'
+    }]
 
-    }
   }, { timestamps: true })
+
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
@@ -24,7 +30,6 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 10)
   next()
 })
-
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password)
 }
@@ -37,13 +42,13 @@ userSchema.methods.generateAccessToken = function () {
         password: this.password,
         email: this.email
       },
-      process.env.ACCESS_TOKEN_SECRET,
+      process.env.ACCESS_TOKEN_KEY,
       { expiresIn: process.env.ACCESS_TOKEN_EXPIRY }
     )
-    return accessToken
+    return accessToken;
   } catch (error) {
-    console.log(500, "error at generateAccessToken")
-    return null
+    console.log(error)
+    throw new Error("Error while generating accessToken");
   }
 }
 
@@ -53,14 +58,12 @@ userSchema.methods.generateRefreshToken = function () {
       {
         _id: this._id
       },
-      process.env.REFRESH_TOKEN_SECRET,
+      process.env.REFRESH_TOKEN_KEY,
       { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
     )
     return refreshToken
   } catch (error) {
-    console.log("error at generateRefreshToken")
-    return null
-
+    throw new Error("Error while generating refresh token")
   }
 }
 
