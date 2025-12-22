@@ -27,9 +27,11 @@ app.use(express.json(
 import userRoute from './routes/user.route.js'
 import chatRouter from './routes/chat.routes.js'
 import friendRouter from './routes/friend.routes.js'
+import { contactRouter } from './routes/contact.routes.js'
 app.use("/api/v1/users", userRoute)
 app.use("/api/v1/chat", chatRouter)
 app.use("/api/v1/friend", friendRouter)
+app.use("/api/v1/contacts", contactRouter)
 
 const __dirname1 = path.resolve()
 

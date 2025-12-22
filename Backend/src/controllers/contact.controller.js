@@ -1,41 +1,55 @@
-import { asyncHandler } from "../utils/asyncHandler";
-import { ApiError } from "../utils/apiError";
-import { User } from "../models/user.model";
-import { Contact } from "../models/contact.model";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiError } from "../utils/apiError.js";
+import { ApiResponse } from "../utils/apiResponse.js"
+import { User } from "../models/user.model.js";
+import { Contact } from "../models/contact.model.js";
 
 export const addContact = asyncHandler(async (req, res) => {
-  const { fullName, email } = req.body;
+  const { contactName, contactEmail, contactNumber } = req.body;
   const userId = req.user._id;
 
-  if (!fullName || !email) {
+  console.log("userid: ", userId);
+  if (!userId) {
+    throw new Error("Unauthorized user")
+  }
+  if (!contactName || !contactEmail || !contactNumber) {
     throw new ApiError(400, "fullName and email are required");
   }
 
-  const user = await User.findById(userId);
-  if (!user) {
-    throw new ApiError(404, "User not found");
-  }
-
   const existingContact = await Contact.findOne({
-    email,
-    user: userId,
+    $or: [{ contactEmail }, { contactNumber }],
   });
 
   if (existingContact) {
     throw new ApiError(409, "Contact already exists");
   }
 
-
+  //start a transaction from here , so that you can roll back if any error occurs 
   const contact = await Contact.create({
-    fullName,
-    email,
-    user: userId,
-  });
+    contactName,
+    contactEmail,
+    contactNumber,
+  })
 
-  res.status(201).json({
-    success: true,
+  const updatedUser = await User.findByIdAndUpdate(userId, {
+    $push: { contacts: contact },
+  }, { new: true })
+
+  return res.status(201).json({
+    status: 200,
     message: "Contact added successfully",
-    data: contact,
-  });
+  })
 });
 
+export const fetchAllContacts = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  console.log(userId)
+  if (!userId) {
+    throw new Error("Unauthorized user");
+  }
+  const allContacts = await User.find(userId).select("contacts");
+
+  return res.status(200).json(
+    new ApiResponse(200, allContacts, "Contacts fetched successfully")
+  )
+})

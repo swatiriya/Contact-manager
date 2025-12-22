@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 const contactSchema = new mongoose.Schema(
   {
-    contactFullName: {
+    contactName: {
       type: String,
       required: false,
     },
@@ -15,10 +15,9 @@ const contactSchema = new mongoose.Schema(
     contactNumber: {
       type: String,
       required: true,
-    }
+    },
   }, { timestamps: true })
 
 export const Contact = mongoose.model("Contact", contactSchema)
-
 
 
