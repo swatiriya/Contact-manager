@@ -87,7 +87,7 @@ function App() {
                 <p>
                   Connectly is a simple contact management demo built with React and Vite. You can add, edit, and delete contacts, and mark favorites.
                   This application is frontend-only and keeps data in memory during the session. Replace the background video in `public/` or change the `src` on the
-                  `<video>` element to a different URL to customize the background.
+                  `element to a different URL to customize the background.
                 </p>
               </section>
             </>
