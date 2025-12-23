@@ -1,14 +1,26 @@
 import { useState } from "react";
-
-function Signup({ onSignup, onBack }) {
+import { userRegister } from "../services/api";
+import { useUserProfile } from "../store/profile.store";
+export function Signup({ onSignup, onBack }) {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
 
   const handleChange = (e) => setForm((s) => ({ ...s, [e.target.name]: e.target.value }));
+  const setUserDetails = useUserProfile((state) => state.setUserDetails);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (onSignup) {
-      onSignup({ name: form.name || form.email.split("@")[0] || "User", email: form.email });
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      console.log("form: ", form);
+      const registerResponse = await userRegister(form.name, form.email, form.password)
+
+      if (registerResponse.status == 200) {
+        console.log("User registered successfully")
+        //After authorization from backend set the userProfile state, can even get it from the access token
+        setUserDetails(form.name, form.email)
+
+      }
+    } catch (error) {
+      //fallback function 
     }
   };
 

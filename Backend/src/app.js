@@ -11,7 +11,7 @@ app.use(express.urlencoded({
 }))
 
 app.use(cors({
-  origin: "https://vanish-xj7x.onrender.com",
+  origin: "*",
   optionsSuccessStatus: 200,
   credentials: true
 }))

@@ -5,6 +5,7 @@ import ContactList from "./components/ContactList";
 import AllContacts from "./pages/AllContacts";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import { userRegister } from "./services/api";
 
 function App() {
   const [theme, setTheme] = useState("dark");
