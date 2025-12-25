@@ -1,4 +1,4 @@
-function Header({ theme = "dark", onToggleTheme, onNavigate }) {
+function Header({ theme = "dark", onToggleTheme, onNavigate, user, onLogout }) {
   return (
     <header
       style={{
@@ -90,38 +90,74 @@ function Header({ theme = "dark", onToggleTheme, onNavigate }) {
             All Contacts
           </button>
 
-          <button
-            type="button"
-            onClick={() => onNavigate && onNavigate("login")}
-            style={{
-              marginLeft: "8px",
-              padding: "8px 12px",
-              borderRadius: "8px",
-              border: "1px solid rgba(0,0,0,0.06)",
-              background: "var(--card-bg)",
-              cursor: "pointer",
-              fontWeight: "700",
-            }}
-          >
-            Login
-          </button>
+          {!user ? (
+            <>
+              <button
+                type="button"
+                onClick={() => onNavigate && onNavigate("login")}
+                style={{
+                  marginLeft: "8px",
+                  padding: "8px 12px",
+                  borderRadius: "8px",
+                  border: "1px solid rgba(0,0,0,0.06)",
+                  background: "var(--card-bg)",
+                  cursor: "pointer",
+                  fontWeight: "700",
+                }}
+              >
+                Login
+              </button>
 
-          <button
-            type="button"
-            onClick={() => onNavigate && onNavigate("signup")}
-            style={{
-              marginLeft: "8px",
-              padding: "8px 12px",
-              borderRadius: "8px",
-              border: "none",
-              background: "linear-gradient(135deg, var(--accent), var(--accent-2))",
-              color: "#0b1221",
-              cursor: "pointer",
-              fontWeight: "700",
-            }}
-          >
-            Signup
-          </button>
+              <button
+                type="button"
+                onClick={() => onNavigate && onNavigate("signup")}
+                style={{
+                  marginLeft: "8px",
+                  padding: "8px 12px",
+                  borderRadius: "8px",
+                  border: "none",
+                  background: "linear-gradient(135deg, var(--accent), var(--accent-2))",
+                  color: "#0b1221",
+                  cursor: "pointer",
+                  fontWeight: "700",
+                }}
+              >
+                Signup
+              </button>
+            </>
+          ) : (
+            <>
+              <div
+                style={{
+                  marginLeft: "8px",
+                  padding: "8px 12px",
+                  borderRadius: "8px",
+                  background: "rgba(99, 102, 241, 0.1)",
+                  color: "var(--accent)",
+                  fontWeight: "700",
+                  display: "inline-block",
+                }}
+              >
+                {user.name || user.email}
+              </div>
+              <button
+                type="button"
+                onClick={onLogout}
+                style={{
+                  marginLeft: "8px",
+                  padding: "8px 12px",
+                  borderRadius: "8px",
+                  border: "none",
+                  background: "linear-gradient(135deg, #ef4444, #dc2626)",
+                  color: "#fff",
+                  cursor: "pointer",
+                  fontWeight: "700",
+                }}
+              >
+                Logout
+              </button>
+            </>
+          )}
 
           <button
             type="button"

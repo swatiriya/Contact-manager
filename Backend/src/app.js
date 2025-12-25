@@ -11,7 +11,7 @@ app.use(express.urlencoded({
 }))
 
 app.use(cors({
-  origin: "https://vanish-xj7x.onrender.com",
+  origin: process.env.NODE_ENV === 'prod' ? "https://vanish-xj7x.onrender.com" : "http://localhost:5173",
   optionsSuccessStatus: 200,
   credentials: true
 }))

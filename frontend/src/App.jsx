@@ -63,42 +63,49 @@ function App() {
     setUser(userData);
     setPage("home");
   };
+  const handleLogout = () => {
+    setUser(null);
+    setPage("home");
+  };
 
   const [page, setPage] = useState("home");
   const navigate = (p) => setPage(p);
 
   return (
     <>
-      <video className="bg-video" autoPlay muted loop playsInline>
-        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      
 
       <div className="site-overlay">
         <div className="container">
-          <Header theme={theme} onToggleTheme={toggleTheme} onNavigate={navigate} />
+          <Header theme={theme} onToggleTheme={toggleTheme} onNavigate={navigate} user={user} onLogout={handleLogout} />
 
-          {page === "home" && (
+          {!user ? (
             <>
-              <ContactForm onAdd={addContact} />
+              {page === "home" && <Login onLogin={handleLogin} onShowSignup={() => navigate("signup")} />}
+              {page === "signup" && <Signup onSignup={handleSignup} onShowLogin={() => navigate("home")} />}
+            </>
+          ) : (
+            <>
+              {page === "home" && (
+                <>
+                  <ContactForm onAdd={addContact} />
 
-              <section className="about-section">
-                <h2 style={{ marginTop: 0 }}>About us</h2>
-                <p>
-                  Connectly is a simple contact management demo built with React and Vite. You can add, edit, and delete contacts, and mark favorites.
-                  This application is frontend-only and keeps data in memory during the session. Replace the background video in `public/` or change the `src` on the
-                  `element to a different URL to customize the background.
-                </p>
-              </section>
+                  <section className="about-section">
+                    <h2 style={{ marginTop: 0 }}>About us</h2>
+                    <p>
+                      Connectly is a simple contact management demo built with React and Vite. You can add, edit, and delete contacts, and mark favorites.
+                      This application is frontend-only and keeps data in memory during the session. Replace the background video in `public/` or change the `src` on the
+                      `element to a different URL to customize the background.
+                    </p>
+                  </section>
+                </>
+              )}
+
+              {page === "contacts" && (
+                <AllContacts contacts={contacts} onDelete={deleteContact} onToggleFavorite={toggleFavorite} onBack={() => navigate("home")} />
+              )}
             </>
           )}
-
-          {page === "contacts" && (
-            <AllContacts contacts={contacts} onDelete={deleteContact} onToggleFavorite={toggleFavorite} onBack={() => navigate("home")} />
-          )}
-
-          {page === "login" && <Login onLogin={handleLogin} onBack={() => navigate("home")} />}
-          {page === "signup" && <Signup onSignup={handleSignup} onBack={() => navigate("home")} />}
         </div>
       </div>
     </>
