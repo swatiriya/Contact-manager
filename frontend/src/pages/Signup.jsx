@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { userRegister } from "../services/api";
+<<<<<<< HEAD
 
 function Signup({ onSignup, onShowLogin }) {
+=======
+import { useUserProfile } from "../store/profile.store";
+export function Signup({ onSignup, onBack }) {
+>>>>>>> 0ec9c9d8541e497f8c9a99112bbad3c53919925e
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleChange = (e) => setForm((s) => ({ ...s, [e.target.name]: e.target.value }));
+  const setUserDetails = useUserProfile((state) => state.setUserDetails);
 
   const handleSubmit = async (e) => {
+<<<<<<< HEAD
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -19,6 +26,21 @@ function Signup({ onSignup, onShowLogin }) {
       setError(err.response?.data?.message || "Signup failed. Please try again.");
     } finally {
       setLoading(false);
+=======
+    try {
+      e.preventDefault();
+      console.log("form: ", form);
+      const registerResponse = await userRegister(form.name, form.email, form.password)
+
+      if (registerResponse.status == 200) {
+        console.log("User registered successfully")
+        //After authorization from backend set the userProfile state, can even get it from the access token
+        setUserDetails(form.name, form.email)
+
+      }
+    } catch (error) {
+      //fallback function 
+>>>>>>> 0ec9c9d8541e497f8c9a99112bbad3c53919925e
     }
   };
 
